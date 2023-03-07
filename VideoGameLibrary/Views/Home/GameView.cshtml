@@ -1,0 +1,44 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model IEnumerable<Games>
+
+<form class="d-flex" method="post" asp-controller="Home" asp-action="Search">
+    <input  name="key" class="form-control me-sm-2" type="search" placeholder="Search">
+    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+</form>
+
+<br>
+
+<form asp-controller="Home" asp-action="Filter" method="post">
+    <input name="Genre" placeholder="Genre" />
+    <input name="ESRB" placeholder="ESRB" />
+    <input name="Platform" placeholder="Platform" />
+    <button type="submit" class="btn-primary btn-success">Filter</button>
+</form>
+
+<h1>Game List</h1>
+<h3>@TempData["success"]</h3>
+@if (Model == null)
+{
+        <h2>No movies provided</h2>
+}
+else
+{
+    foreach (Games game in Model)
+    {
+                <partial name="_GamesPartialView.cshtml" for="@game" />
+    }
+    <br/>
+    <br/>
+    <br/>
+
+    <a asp-controller="Home" asp-action="Create"
+   class="btn btn-primary mx-2">
+        <i class=" bi bi-pencil"></i>
+        Create a Game
+    </a>
+}

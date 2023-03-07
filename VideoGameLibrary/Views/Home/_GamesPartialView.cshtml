@@ -1,0 +1,58 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Games
+
+<html>
+@if(Model == null)
+{
+    <h2>no game available</h2>
+}
+else
+{
+    //<h2>Total Number of games: @Model.dal.getGames()</h2>
+    //<br />
+    <div><h2>@Model.Title</h2></div>
+    <div><img src=@Model.Image height="400" width="400"/></div>
+    <body>
+    <p>Platform: @Model.Platform</p>
+    <p>Genre: @Model.Genre</p>
+    <p>Year: @Model.Year</p>
+    <p>ESRB: @Model.ESRB</p>
+    @if(@Model.LoanDate == null)
+    {
+        <form app-Controler="Home" asp-action="GameView" asp-route-title="@Model.Title" method="post">
+            <div>
+                <div>
+                    <input id="Name" type="text" name="Name" placeholder="Name Of Loaner"/>
+                </div>
+                <button class="btn btn-light" type="submit" id="@Model.Title" name="@Model.Title">Loan</button>
+            </div>
+        </form>
+    }
+    else
+    {
+        <div>
+            <p>Loaned: @Model.LoanedTo</p>
+            <p>Loan Date: @Model.LoanDate.Value.ToShortDateString()</p>
+        </div>
+        <form app-Controler="Home" asp-action="GameView" asp-route-title="@Model.Title" method="post">
+            <button type="submit" class="btn btn-primary">Return</button>
+        </form>
+    }
+    </body>
+        <a asp-controller="Home" asp-action="Edit" asp-route-id="@Model.Id"
+   class="btn btn-primary mx-2">
+            <i class=" bi bi-pencil"></i>
+            Edit
+        </a>
+            <a asp-controller="Home" asp-action="Delete" asp-route-id="@Model.Id"
+   class="btn btn-primary mx-2">
+            <i class=" bi bi-pencil"></i>
+            Delete
+        </a>
+}
+</html>
